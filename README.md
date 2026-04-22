@@ -12,7 +12,7 @@ It integrates sales data with external customers and region sources to create a 
 - `docs/` - documentation for EDA, the star schema model, and integration logic.
 - `scripts/` - ETL scripts for sales, customers, products, and regions.
 - `sql/` - SQL script to create the star schema tables.
-- `credentials.csv` - example file for database credentials.
+- `.env.example` - example template for PostgreSQL environment variables.
 - `main.py` - orchestrates the full ETL pipeline.
 
 ## Clone the repository
@@ -34,6 +34,24 @@ uv sync
 python -m pip install pandas requests numpy python-dotenv sqlalchemy
 ```
 
+## Environment variables
+
+This project uses a `.env` file to load PostgreSQL connection settings securely. Copy the example file and update the values for your local environment:
+
+```bash
+cp .env.example .env
+```
+
+Required environment variables:
+
+- `PGHOST` - database host
+- `PGPORT` - database port
+- `PGUSER` - database user
+- `PGPASSWORD` - database password
+- `PGDATABASE` - database name
+
+> Do not commit your `.env` file to source control.
+
 ## How to run the project
 
 1. Activate the virtual environment:
@@ -42,21 +60,19 @@ python -m pip install pandas requests numpy python-dotenv sqlalchemy
 source .venv/bin/activate
 ```
 
-2. Run the full ETL pipeline:
+2. Make sure your `.env` file is configured.
+
+3. Run the full ETL pipeline:
 
 ```bash
 python main.py
 ```
 
-3. Generated files will be available in `data/`, and PostgreSQL will be populated automatically.
+4. Generated files will be available in `data/`, and PostgreSQL will be populated automatically.
 
 ## Database
 
-- **Host**: 51.222.142.204
-- **Port**: 5432
-- **User**: coder-ra-c6
-- **Database**: pdd_m5_stevenpatino
-- **Tables**: dim_cliente, dim_producto, dim_region, fact_ventas
+The PostgreSQL database connection is configured through environment variables in `.env`.
 
 ## Individual scripts
 
@@ -87,4 +103,4 @@ SELECT 'Sales', COUNT(*) FROM fact_ventas;
 
 - The solution uses Python and pandas for cleaning, transformation, and integration.
 - The star schema supports efficient sales analysis by customer, product, and region.
-"# PDD_MD5" 
+
